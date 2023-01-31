@@ -1,0 +1,21 @@
+export const users=[
+    {
+    username:"Pavi",
+    email:"pavi@gmail.com",
+    password:"00000000",
+   },
+   {
+    username:"mandu",
+    email:"mandu@gmail.com",
+    password:44443333,
+   },
+   {
+    username:"indhu",
+    email:"indhu@gmail.com",
+    password:22223333,
+   },
+   {
+    username:"nathan",
+    email:"nathan@gmail.com",
+    password:11112222,
+   }]
