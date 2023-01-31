@@ -1,13 +1,11 @@
 import { useState , useEffect } from 'react';
 import { Button,Text,View,StyleSheet,TextInput, Alert } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import DateTimePickerModal from 'react-native-modal-datetime-picker';
 import moment from 'moment/moment';
-import Icon from 'react-native-vector-icons/Ionicons';
-import { Dropdown } from 'react-native-element-dropdown';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import LoginPage from './Login';
-
+import DropdownScreen from '../Components/DropDown';
+import DatePicker from '../Components/DatePicker';
 
 export  const SignupScreen = ({navigation}) => { 
 
@@ -19,36 +17,8 @@ export  const SignupScreen = ({navigation}) => {
     })
     console.log(signUp,"signup")
     
-    const [selectedDate, setSelectedDate] = useState("");
-    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
-  
-    const showDatePicker = () => {
-      setDatePickerVisibility(true);
-    };
-  
-    const hideDatePicker = () => {
-      setDatePickerVisibility(false);
-    };
-  
-    const handleConfirm = (date) => {
-      setSelectedDate(date);
-      hideDatePicker();
-    };  
-
-    const dropdown_data=[
-        {
-           label: "qualification",value:""
-        },
-        {
-       label:"UG",value:"UG"
-    },
-    {
-       label:"PG",value:"PG"
-    },
-    {
-       label:"Ph.D",value:"Ph.D"
-    },]
-    const [value, setValue] = useState(null);
+ 
+    
 
     const signup_submit=async()=>{
        const list=await AsyncStorage.getItem("regi_user") ? 
@@ -56,7 +26,6 @@ export  const SignupScreen = ({navigation}) => {
        list.push(signUp)
       await AsyncStorage.setItem("regi_user",JSON.stringify(list))
         Alert.alert("Registered Successfully")
-       
         setSignUp("")
         setSelectedDate("")
         setValue(null)
@@ -110,41 +79,11 @@ export  const SignupScreen = ({navigation}) => {
                 </View>
 
                 <View style={styles.inputTextWrapper}>
-                    <View style={{flexDirection:"row"}}>
-                        <TextInput 
-                            placeholder={selectedDate? moment(selectedDate).format("DD/MM/YYYY"):"Please select date"}
-                            placeholderTextColor={ 'white' }
-                            style={styles.textInput}
-                        />
-                        { ! selectedDate && <Icon name='md-calendar' color="white" size={26} onPress={showDatePicker} />}                 
-                    </View>
-                    <DateTimePickerModal
-                        isVisible={isDatePickerVisible}
-                        mode="date"
-                        onConfirm={handleConfirm}
-                        onCancel={hideDatePicker}
-                    />
+                  <DatePicker />
                  </View>
 
                     <View style={styles.inputTextWrapper}>
-                        <Dropdown
-                            style={[styles.dropdown]}
-                            placeholderStyle={styles.placeholderStyle}
-                            selectedTextStyle={styles.selectedTextStyle}
-                            inputSearchStyle={styles.inputSearchStyle}
-                            data={dropdown_data}
-                            search
-                            maxHeight={300}
-                            labelField="label"
-                            valueField="value"
-                            placeholder="Qualificaion"
-                            placeholderTextColor="white"
-                            searchPlaceholder="Search..."
-                            value={value}
-                            onChange={item => {
-                            setValue(item.value);
-                            }}
-                        />
+                        <DropdownScreen />
                    </View>
 
                     <View style={styles.inputTextWrapper}>
